@@ -1,4 +1,4 @@
-import type { Component, VNode } from 'vue'
+import type { Component, ComputedRef, VNode } from 'vue'
 import type { ToastProps } from '.'
 import { computed, ref } from 'vue'
 
@@ -120,6 +120,17 @@ function dispatch(action: Action) {
       break
   }
 }
+
+interface UseToast {
+  dismiss: (toastId?: string) => void
+  toast: (props: Toast) => {
+    dismiss: () => void
+    id: string
+    update: (props: ToasterToast) => void
+  }
+  toasts: ComputedRef<ToasterToast[]>
+}
+
 
 function useToast() {
   return {
